@@ -1,4 +1,4 @@
-# Group_2_Graph-Theory_Matching_and_Coloring
+# Group_2_Graph-Theory_Matching_&_Coloring
 
 ## Group Members
 
