@@ -1,0 +1,7 @@
+# Sample 2: different case, 5 workers x 5 tasks (hours)
+5
+12 8 15 10 9
+7 9 8 14 11
+13 6 12 9 10
+9 11 7 8 13
+10 12 9 11 6
