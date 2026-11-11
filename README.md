@@ -38,6 +38,24 @@ The algorithm relies on the following ideas:
 
 The textbook version of the algorithm runs in O(n⁴), and efficient implementations that maintain row and column potentials run in O(n³). Our implementation follows the lecture steps directly and favors clarity over speed. The main drawback of the algorithm is that it only handles one-to-one assignment between sets of the same size, so a rectangular matrix must first be padded with dummy rows or columns, and the covering-lines step is tedious to implement directly.
 
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+#### Backtracking Algorithm (Sudoku Vertex Coloring)
+1. Initialize the graph structure where each cell of the grid acts as a vertex, with edges connecting cells that share row, column, or subgrid constraints.
+2. Scan the grid to find the next unassigned vertex (empty cell).
+3. Iterate through the available color options (digits 1 through 9) for the current vertex.
+4. Validate safety constraints to ensure no adjacent vertex shares the chosen color across its row, column, or 3x3 subgrid (is_safe).
+5. Recursively advance to the subsequent unassigned vertex; if a conflict arises further down the search tree, backtrack by resetting the cell's value and trying the next available option.
+6. Terminate successfully once all vertices are validly colored, or return false if no valid configuration exists.
+
+#### Welsh-Powell Algorithm (Timetabling)
+1. Calculate the degree (number of conflicting edges) for every vertex in the graph.
+2. Sort all vertices in descending order based on their calculated degrees.
+3. Assign the first available color (time slot 1) to the vertex with the highest degree.
+4. Traverse down the ordered list and assign the same color to any uncolored vertex that is not connected by an edge to already colored vertices in the current pass.
+5. Repeat the assignment process with a new color for the remaining uncolored vertices.
+6. Continue iteratively until every vertex in the graph has been successfully assigned a color (time slot).
+
 ## Implementations
 
 ### Hungarian Algorithm
