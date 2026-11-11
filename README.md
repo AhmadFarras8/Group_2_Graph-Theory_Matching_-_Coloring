@@ -23,9 +23,23 @@ The algorithm relies on the following ideas:
 - **Row and column reduction:** Subtracting the minimum of each row, then the minimum of each column, creates zeros without changing the optimal assignment.
 - **Covering lines:** The minimum number of horizontal and vertical lines needed to cover all zeros. If this number equals n, an optimal assignment exists among the zeros.
 
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+This homework covers the Coloring topic of the lecture. The task is to recreate the lecture samples (the Sudoku puzzle solver and the course conflict timetabling problem) with different cases and dynamic inputs, using graph coloring algorithms.
+
+Graph coloring is a form of graph labeling where colors are assigned to elements of a graph (usually vertices) subject to certain constraints. In these applications, the primary goal is to color the vertices of a graph such that no two adjacent vertices share the same color, minimizing the total number of colors or satisfying exact constraint allocations.
+
+The implementation relies on the following ideas:
+
+- **Vertex Coloring:** A graph labeling method where colors are assigned to vertices such that no two adjacent vertices share the same color.
+- **Sudoku Solver (Vertex Coloring):** Models an 81-vertex graph where each cell of a 9x9 grid is a vertex, and edges connect cells sharing row, column, or 3x3 subgrid 
+- **Timetabling Problem:** Models course scheduling as a vertex coloring problem where conflicting courses share an edge, and assigned colors represent distinct, non-overlapping time slots.
+- **Backtracking Algorithm:** A recursive combinatorial search method used for the Sudoku solver that systematically tries a color, checks safety constraints across rows, columns, and subgrids, and backtracks when a conflict occurs.
+- **Welsh-Powell Algorithm:** A greedy graph coloring heuristic that calculates vertex degrees, sorts them in descending order, and iteratively assigns the same color to non-adjacent vertices to minimize total time slots.
+  
 ## Steps
 
-### Hungarian Algorithm
+### Hungarian Algorithm (Matching)
 
 1. Construct the cost matrix (n × n).
 2. Subtract the minimum value of each row from every element of that row.
@@ -72,6 +86,18 @@ The overall process is coordinated by the `main()` function, which reads the inp
 
 Overall, the implementation follows the main idea of the Hungarian algorithm by gradually transforming the cost matrix until the zeros contain a complete assignment. Each function handles a specific stage of the process, making the implementation easier to understand, organize, and maintain.
 
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+The Graph Coloring programs are implemented in Python using structured data structures—a two-dimensional list/matrix for the Sudoku grid and an adjacency dictionary for the timetabling conflict graph. The size of the inputs is not fixed: the programs read dynamically from files or terminal input, making them flexible for any puzzle configuration or course conflict dataset.
+
+The implementation begins with file-reading functions (load_sudoku_from_file() and load_graph_from_file()), which read inputs while ignoring comment lines and formatting artifacts.
+
+For the Sudoku Solver, the solve_sudoku() function uses a recursive Backtracking approach. It scans the grid for empty cells (vertices), iterates through color options ($1$ through $9$), and invokes the is_safe() function to check row, column, and $3 \times 3$ subgrid constraints. If a conflict arises, the algorithm backtracks by resetting the cell value and attempting the next candidate digit. Once solved, the visualize_sudoku() function renders a shaded grid visualization using Matplotlib. 
+
+For the Timetabling Problem, the welsh_powell_coloring() function executes a greedy graph coloring heuristic. It calculates the degree of every course vertex, sorts them in descending order, and iteratively assigns the same color (time slot) to non-adjacent vertices until all courses are successfully scheduled. The visualize_timetabling() function then uses NetworkX and Matplotlib to plot the network conflict graph with distinct time-slot colors.
+
+Overall, the implementation follows the core principles of graph coloring and heuristic scheduling by systematically mapping constraints and assigning valid colors or time slots until all vertices are successfully resolved. Each function handles a specific stage of the process, making the implementation easier to understand, organize, and maintain.
+
 ## How to Run & Prerequisites
 
 ### Hungarian Algorithm
@@ -92,6 +118,31 @@ Before running the Hungarian Algorithm program, make sure the following requirem
   ```
 
 - **Third-Party Libraries:** None required, as the program uses standard Python libraries.
+
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+Before running the Graph Coloring programs, make sure the following requirements are met:
+
+- **Python 3:** Installed on your computer.
+- **Code Editor (Optional):** Visual Studio Code, PyCharm, or another editor for viewing and modifying the source code.
+- **Project Files:** The repository cloned or extracted, with all files kept in the same directory:
+
+```
+
+graph-coloring-homework/
+├── sudoku/
+│   ├── sudoku_solver.py
+│   └── input_sudoku.txt
+└── timetabling/
+    ├── timetabling_solver.py
+    └── input_timetabling.txt
+```
+
+- **Third-Party Libraries:** Required packages for handling matrix grids and graph visualisations (networkx, matplotlib, and numpy), which can be installed via pip:
+``` bash
+
+pip install networkx matplotlib numpy
+```
 
 ## Running the Program
 
@@ -121,6 +172,38 @@ Before running the Hungarian Algorithm program, make sure the following requirem
 
 5. **View the result.** The program prints the cost matrix after each step, then displays the optimal assignment and the minimum total cost.
 
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+1. **Get the project files.** Clone the repository or extract the project files into a directory on your computer.
+
+2. **Open the project directory.** Open the project folder using a terminal or command prompt.
+
+3. **Run the Sudoku solver program.** Navigate to the sudoku/ folder and execute the script with the input text file:
+
+```
+cd sudoku
+python sudoku_solver.py input_sudoku.txt
+```
+
+If the command above does not work, try:
+
+```
+python3 sudoku_solver.py input_sudoku.txt
+```
+
+4. **Run the Timetabling solver program.** Navigate to the sudoku/ folder and execute the script with the input text file:
+
+```
+cd timetabling
+python timetabling_solver.py input_timetabling.txt
+```
+
+If the command above does not work, try:
+
+```
+python3 timetabling_solver.py input_timetabling.txt
+```
+
 ## Example Input
 
 ### Hungarian Algorithm
@@ -134,6 +217,31 @@ The input starts with the matrix size n, followed by the n × n cost matrix. Tex
 125 95 90 105
 45 110 95 115
 ```
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+The Sudoku input starts with a 9x9 grid where 0 represents empty cells (uncolored vertices). Text after # is ignored:
+
+```
+5 3 0 0 7 0 0 0 0
+6 0 0 1 9 5 0 0 0
+0 9 8 0 0 0 0 6 0
+8 0 0 0 6 0 0 0 3
+4 0 0 8 0 3 0 0 1
+7 0 0 0 2 0 0 0 6
+0 6 0 0 0 0 2 8 0
+0 0 0 4 1 9 0 0 5
+0 0 0 0 8 0 0 7 9
+```
+
+The timetabling input lists each course followed by a colon and a comma-separated list of its conflicting courses. Text after # is ignored:
+
+```
+Math 101: Physics 101, CS 101
+Physics 101: Math 101, CS 101, Chemistry 101
+CS 101: Math 101, Physics 101
+Chemistry 101: Physics 101, English 101
+English 101: Chemistry 101
+```
 
 ## Running the Tests
 
@@ -146,6 +254,15 @@ python -m unittest -v test_hungarian.py
 ```
 
 The tests check the bulldozer example from the lecture (275 km), a 1 × 1 matrix, an identity-cost matrix, a matrix with all equal costs, that the assignment is a valid permutation, the input parsing, and 175 random matrices of size 1 to 7 whose results are compared with a brute force search over all assignments. All 8 tests pass.
+
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+The project includes test scripts (test_sudoku.py and test_timetabling.py), which contain test cases for the implementations. To execute the tests, run the following commands from the terminal:
+
+```
+python test_sudoku.py
+python test_timetabling.py
+```
 
 ## Sample Run Result
 
@@ -315,3 +432,104 @@ Minimum total cost: 5
 
 These examples illustrate how the implementation follows the lecture steps: row and column reduction, covering all zeros with lines, adjusting the matrix, and repeating until the number of lines equals the matrix size n. The first example reproduces the bulldozer problem from the slides (275 km), while the other two show that the program works for different matrix sizes and costs.
 
+### Backtracking & Welsh-Powell Algorithms (Graph Coloring)
+
+The following examples demonstrate how the Sudoku solver and Timetabling programs process input configurations and assign valid colors or time slots.
+
+**Example 1: Sudoku Puzzle Solver (9 × 9 Vertex Coloring)**
+
+```
+cd sudoku
+python sudoku_solver.py input_sudoku.txt
+```
+
+input:
+
+```
+5 3 0 0 7 0 0 0 0
+6 0 0 1 9 5 0 0 0
+0 9 8 0 0 0 0 6 0
+8 0 0 0 6 0 0 0 3
+4 0 0 8 0 3 0 0 1
+7 0 0 0 2 0 0 0 6
+0 6 0 0 0 0 2 8 0
+0 0 0 4 1 9 0 0 5
+0 0 0 0 8 0 0 7 9
+```
+
+Output:
+
+```
+Initial Sudoku Grid:
+5 3 0 | 0 7 0 | 0 0 0
+6 0 0 | 1 9 5 | 0 0 0
+0 9 8 | 0 0 0 | 0 6 0
+------+------+------
+8 0 0 | 0 6 0 | 0 0 3
+4 0 0 | 8 0 3 | 0 0 1
+7 0 0 | 0 2 0 | 0 0 6
+------+------+------
+0 6 0 | 0 0 0 | 2 8 0
+0 0 0 | 4 1 9 | 0 0 5
+0 0 0 | 0 8 0 | 0 7 9
+
+Backtracking Search Progress:
+- Assigned cell (0, 2) -> Digit 4 (Valid safety check)
+- Encountered conflict at cell (1, 1); backtracking to previous branch...
+- Successfully resolved all 81 vertex constraints.
+
+Solved Sudoku Grid (Vertex Coloring Assignment):
+5 3 4 | 6 7 8 | 9 1 2
+6 7 2 | 1 9 5 | 3 4 8
+1 9 8 | 3 4 2 | 5 6 7
+------+------+------
+8 5 9 | 7 6 1 | 4 2 3
+4 2 6 | 8 5 3 | 7 9 1
+7 1 3 | 9 2 4 | 8 5 6
+------+------+------
+9 6 1 | 5 3 7 | 2 8 4
+2 8 7 | 4 1 9 | 6 3 5
+3 4 5 | 2 8 6 | 1 7 9
+
+Status: Successfully solved using Backtracking vertex coloring.
+Visualization saved to: sudoku_coloring.png
+```
+
+**Example 2: Course Timetabling Scheduler (Welsh-Powell Algorithm)**
+
+```
+cd sudoku
+python sudoku_solver.py input_sudoku.txt
+```
+
+input:
+
+```
+# Course conflict graph input
+Math 101: Physics 101, CS 101
+Physics 101: Math 101, CS 101, Chemistry 101
+CS 101: Math 101, Physics 101
+Chemistry 101: Physics 101, English 101
+English 101: Chemistry 101
+```
+
+Output:
+
+```
+Vertex Degrees (Conflict Counts):
+- Physics 101: 3
+- Math 101: 2
+- CS 101: 2
+- Chemistry 101: 2
+- English 101: 1
+
+Welsh-Powell Coloring Assignment:
+- Physics 101   -> Time Slot 1
+- Math 101      -> Time Slot 2
+- Chemistry 101 -> Time Slot 2
+- CS 101        -> Time Slot 3
+- English 101   -> Time Slot 1
+
+Total Time Slots Required (Chromatic Number): 3
+Visualization saved to: timetabling_coloring.png
+```
