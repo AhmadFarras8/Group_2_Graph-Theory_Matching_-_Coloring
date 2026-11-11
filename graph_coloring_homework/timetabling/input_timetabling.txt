@@ -1,0 +1,5 @@
+Math 101: Physics 101, CS 101
+Physics 101: Math 101, CS 101, Chemistry 101
+CS 101: Math 101, Physics 101
+Chemistry 101: Physics 101, English 101
+English 101: Chemistry 101
